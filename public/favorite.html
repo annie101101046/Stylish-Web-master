@@ -2,13 +2,14 @@
 <html>
 
 <head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Stylish 產品資訊</title>
-	<link rel="stylesheet" type="text/css" href="css/product.css" media="all" />
+	<title>Stylish 購物車</title>
+	<link rel="stylesheet" type="text/css" href="css/fav.css" media="all" />
+	<script src="https://js.tappaysdk.com/tpdirect/v3"></script>
 	<script src="js/lib.js"></script>
-	<script src="js/product.js"></script>
-	<script src="js/product 2.js"></script>
+	<script src="js/fav.js"></script>
 </head>
 
 <body>
@@ -51,40 +52,9 @@
 		</div>
 	</div>
 	<main>
-		<div class="view">
-			<div id="product-main-image" class="main-image"></div>
-			<div class="details">
-				<div id="product-name" class="name"></div>
-				<div id="product-id" class="id"></div>
-				<div id="product-price" class="price"></div>
-				<div id="product-colors" class="colors">
-					<span class="title">顏色 &nbsp; |</span>
-				</div>
-				<div id="product-sizes" class="sizes">
-					<span class="title">尺寸 &nbsp; |</span>
-				</div>
-				<div class="qty">
-					<span class="title">數量 &nbsp; |</span>
-					<div id="product-qty" class="chooser">
-						<div class="op" data-value="-1">-</div>
-						<div class="value"></div>
-						<div class="op" data-value="1">+</div>
-					</div>
-				</div>
-				<div class="add-cart">
-					<button id="product-add-cart-btn">加入購物車</button>
-				</div>
-				<div id="product-summary" class="summary"></div>
-			</div>
-			<div class="separator">
-				<div class="title">更多產品資訊</div>
-				<div class="line"></div>
-			</div>
-			<div class="description">
-				<div class="story" id="product-story"></div>
-				<div class="images" id="product-images"></div>
-			</div>
-		</div>
+		<h1>喜愛名單</h1>
+		<button class="like-btn" id="like"></button>
+		<div class="container-fav"></div>
 	</main>
 	<footer>
 		<div class="view">
