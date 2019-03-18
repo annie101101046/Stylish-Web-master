@@ -58,6 +58,9 @@
 				</div>
 				<div class="content">
 					<div id="profile_picture" class="header"></div>
+					<form action="/api/1.0/admin/avatar" method="post" enctype="multipart/form-data">
+						<div><label>Avatar<div><input type="file" name="avatar"></div></label></div><button type="submit">Submit</button>
+					</form>
 					<div id="load_name" class="checkmark">姓名</div>
 					<div id="load_email" class="crossmark">Email</div>
 					<p class="description"></p>
