@@ -52,15 +52,23 @@
 		<div class="view">
 			<h2 class="headline">會員基本資訊</h2>
 			<div class="card">
-				<div class="FbButton">
-					<div class="fb-login-button" data-size="small" data-button-type="login_with" data-auto-logout-link="true"
-					 data-onlogin="checkLogin()" data-use-continue-as="false" data-scope="email"></div>
-				</div>
 				<div class="content">
-					<div id="profile_picture" class="header"></div>
-					<form action="/api/1.0/admin/avatar" method="post" enctype="multipart/form-data">
-						<div><label>Avatar<div><input type="file" name="avatar"></div></label></div><button type="submit">Submit</button>
+					<img id="profile_picture" class="header"></img>
+
+					<!--因為要改 headers 所以要用其他方法發 request... T_T-->
+
+					<form id="image_uplaod" method="post" enctype="multipart/form-data">
+						<div>
+							<label>
+								Avatar
+								<div>
+									<input type="file" name="avatar">
+								</div>
+							</label>
+						</div>
+						<button type="submit">Submit</button>
 					</form>
+
 					<div id="load_name" class="checkmark">姓名</div>
 					<div id="load_email" class="crossmark">Email</div>
 					<p class="description"></p>

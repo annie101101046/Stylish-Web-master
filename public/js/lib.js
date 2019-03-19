@@ -186,11 +186,11 @@ app.fb.updateLoginToServer = function () {
 	app.ajax("post", app.cst.API_HOST + "/user/signin", data, {}, function (req) {});
 };
 app.fb.clickProfile = function () {
-	if (app.state.auth === null) {
-		app.fb.login();
-	} else {
-		window.location = "./profile.html";
-	}
+	// if (app.state.auth === null) {
+	// 	app.fb.login();
+	// } else {
+	window.location = "./profile.html";
+	// }
 };
 app.fb.getProfile = function () {
 	return new Promise((resolve, reject) => {
