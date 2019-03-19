@@ -44,6 +44,9 @@ app.showProfile = function (data) {
 	app.get("#profile_picture").src = "https://graph.facebook.com/" + data.id + "/picture/?width=200";
 	document.getElementById('load_name').innerText = data.name;
 	document.getElementById('load_email').innerText = data.email;
+	const imageUpload = document.getElementById('image_uplaod');
+	console.log(imageUpload);
+	imageUpload.style.display = 'none';
 };
 window.addEventListener("DOMContentLoaded", app.init);
 

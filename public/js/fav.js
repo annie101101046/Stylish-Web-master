@@ -12,71 +12,80 @@ function getCookies(name) {
 	return result; // null if not found
 }
 
-var like = document.querySelector('.like-btn');
-like.onclick = function (e) {
-	const trigger = e.target.classList.toggle('is-active');
-	const id = document.getElementById('product-id').innerText;
-	const likeUrl = `https://davidadm.com/api/1.0/user/favorite-save?id=${id}`;
-	const unlikeUrl = `https://davidadm.com/api/1.0/user/favorite-delete?id=${id}`;
-	const token = getCookies('token');
-	console.log(token);
-	if (!token) {
-		return;
-	}
-	if (trigger) { // like
-
-		fetch(likeUrl, {
-			headers: {
-				'Authorization': `Bearer ${token}`,
-			},
-			method: 'GET', // *GET, POST, PUT, DELETE, etc.
-		}).then(res => console.log(res.json()));
-	} else { //unlike
-		fetch(unlikeUrl, {
-			headers: {
-				'Authorization': `Bearer ${token}`,
-			},
-			method: 'GET', // *GET, POST, PUT, DELETE, etc.
-		}).then(res => console.log(res.json()));;
-	}
-};
-
-
-
-var list = document.querySelector('.listlist');
-
-list.onclick = function () {
-	window.location = "favorite.html";
-}
-
-
-//找到 user，get 所有她點擊所有的商品 id 印到喜愛清單那頁
-if (window.location === "favorite.html") {
-	getLike();
-}
-
 function getLike() {
+	//測試用
+	// let data = {
+	// 	"data": {
+	// 		"id": ["201807201824", "201807202140", "201807202150"]
+	// 	}
+	// }
+
+	// showProducts(data)
 	const token = getCookies('token');
 	const getLikeURL = 'https://davidadm.com/api/1.0/user/favorite-get';
 	fetch(getLikeURL, {
-		headers: {
-			'Authorization': `Bearer ${token}`,
-		},
-		method: 'GET', // *GET, POST, PUT, DELETE, etc.
-	}).then(res => console.log(res.json()));
+			headers: {
+				'Authorization': `Bearer ${token}`,
+			},
+			method: 'GET', // *GET, POST, PUT, DELETE, etc.
+		}).then(res => res.json())
+		.then(function (data) {
+			showProducts(data);
+		});
 };
 
+//讀出該 id 的商品標題、圖片、價錢、點進去又回到該商品
+function showProducts(data) {
+	for (let i = 0; i < data.data.id.length; i += 1) {
+		let id = data.data.id[i];
+		let url = `https://api.appworks-school.tw/api/1.0/products/details?id=${id}`;
+
+		let containerFav = document.createElement('div');
+		let title = document.createElement('div');
+		title.setAttribute('class', 'title');
+		let pic = document.createElement('div');
+		let img = document.createElement('img');
+		pic.setAttribute('class', 'pic');
+		let price = document.createElement('div');
+		price.setAttribute('class', 'price');
+		let main = document.getElementsByTagName('main')[0];
+		containerFav.setAttribute('class', 'container-fav');
+
+		main.appendChild(containerFav);
+		containerFav.appendChild(title);
+		containerFav.appendChild(pic);
+		pic.appendChild(img);
+		containerFav.appendChild(price);
+
+		containerFav.addEventListener("click", function () {
+			window.location = `product.html?id=${id}`;
+		});
 
 
-// app.showProduct = function () {
-// 	let product = app.state.product;
-// 	app.get("#product-name").textContent = product.title;
-// 	app.get("#product-id").textContent = product.id;
-// 	app.get("#product-price").textContent = "TWD." + product.price;
-// 	app.get("#product-summary").innerHTML = product.note + "<br/><br/>" + product.texture + "<br/>" + product.description.replace(/\r\n/g, "<br/>") + "<br/><br/>清洗：" + product.wash + "<br/>產地：" + product.place;
-// 	app.createElement("img", {
-// 		atrs: {
-// 			src: product.main_image
-// 		}
-// 	}, app.get("#product-main-image"));
+		fetch(url, {
+				method: 'GET', // *GET, POST, PUT, DELETE, etc.
+			}).then(res => res.json())
+			.then(function (data) {
+				title.innerHTML = data.data.title;
+				price.innerHTML = data.data.price;
+				img.src = data.data.main_image;
+			});
+	};
+}
+
+
+
+//三個一樣的東東
+// data => console.log(data)
+
+// funcion XXX(data) {
+// 	console.log(data)
 // }
+
+// XXX = (data) => {
+// 	console.log(data)
+// }
+
+// data => console.log(data);
+
+window.addEventListener("DOMContentLoaded", getLike);

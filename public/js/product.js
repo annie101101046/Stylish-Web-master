@@ -8,6 +8,7 @@ app.init = function () {
 	}
 	app.cart.init();
 	app.getProduct(id);
+	getVideos(id);
 	// init event handlers
 	app.setEventHandlers(app.get("#product-add-cart-btn"), {
 		click: function () {
@@ -103,7 +104,6 @@ app.findVariant = function (colorCode, size) {
 	});
 };
 app.refreshProductVariants = function () {
-	let variants = app.state.product.variants;
 	let variant = app.state.variant;
 	let colors = app.getAll("#product-colors>.color");
 	for (let i = 0; i < colors.length; i++) {
@@ -134,7 +134,6 @@ app.refreshProductVariants = function () {
 };
 app.evts.clickColor = function (e) {
 	let color = e.currentTarget.value;
-	let variants = app.state.product.variants;
 	app.state.variant = app.findVariant(color.code, app.state.variant.size);
 	if (app.state.variant.stock === 0) { // out of stock, choose another size automatically
 		let sizes = app.state.product.sizes;
@@ -155,7 +154,6 @@ app.evts.clickSize = function (e) {
 		return;
 	}
 	let size = e.currentTarget.value;
-	let variants = app.state.product.variants;
 	app.state.variant = app.findVariant(app.state.variant.color_code, size);
 	app.state.qty = 1;
 	app.refreshProductVariants();
@@ -170,4 +168,103 @@ app.evts.clickQty = function (e) {
 	}
 };
 
+
+
+// 在 product 頁接 YouTube 影片
+//id 是從 app init 傳進來的
+function getVideos(id) {
+
+	const getVideosURL = `https://davidadm.com/api/1.0/products/video-get?id=${id}`;
+
+	fetch(getVideosURL, {
+			method: 'GET', // *GET, POST, PUT, DELETE, etc.
+		}).then(res => res.json())
+		.then(function (data) {
+			showVideos(data);
+		});
+};
+
+//show videos
+function showVideos(data) {
+	console.log(data);
+	for (let i = 0; i < data.data.length; i += 1) {
+		let src = data.data[i];
+		let frame = document.getElementById('product-videos');
+		let video = document.createElement('div');
+		frame.appendChild(video);
+		video.innerHTML = `<iframe width="560" height="315" src=${src} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+	}
+}
+
+
+function addVideo() {
+	var button = document.getElementById('clickAdd');
+	button.onclick = function (e) {
+		var inputText = document.getElementById('addInput').value;
+		const id = document.getElementById('product-id').innerText;
+		const addVideosURL = `https://davidadm.com/api/1.0/products/video-add?id=${id}&link=${inputText}`;
+
+		fetch(addVideosURL, {
+				headers: {
+					'Authorization': 'Bearer iamacoolguyilovetaiwan',
+				},
+				method: 'GET', // *GET, POST, PUT, DELETE, etc.
+			}).then(res => res.json())
+			.then(function (data) {
+				showVideos(data);
+			});
+	};
+}
+
+
+
+// 寄信 push notification: 當我拿到後端打過來的信件通知時，我再 push 到 chrome 頁面上？
+
+
+// list click
+function Listlist() {
+	var list = document.querySelector('.listlist');
+
+	list.onclick = function () {
+		window.location = "favorite.html";
+	}
+}
+
+//like button
+function likeButton() {
+	console.log('likeButton')
+	var like = document.querySelector('.like-btn');
+	like.onclick = function (e) {
+		const trigger = e.target.classList.toggle('is-active');
+		const id = document.getElementById('product-id').innerText;
+		const likeUrl = `https://davidadm.com/api/1.0/user/favorite-save?id=${id}`;
+		const unlikeUrl = `https://davidadm.com/api/1.0/user/favorite-delete?id=${id}`;
+		const token = getCookies('token');
+		console.log(token);
+		if (!token) {
+			return;
+		}
+		if (trigger) { // like
+			let header = new Headers({
+				'Authorization': `Bearer ${token}`,
+			})
+			console.log(header.get('Authorization'))
+			fetch(likeUrl, {
+				headers: header,
+				method: 'GET', // *GET, POST, PUT, DELETE, etc.
+			}).then(res => console.log(res.json()));
+		} else { //unlike
+			fetch(unlikeUrl, {
+				headers: {
+					'Authorization': `Bearer ${token}`,
+				},
+				method: 'GET', // *GET, POST, PUT, DELETE, etc.
+			}).then(res => console.log(res.json()));;
+		}
+	};
+}
+
 window.addEventListener("DOMContentLoaded", app.init);
+window.addEventListener("DOMContentLoaded", likeButton);
+window.addEventListener("DOMContentLoaded", Listlist);
+window.addEventListener("DOMContentLoaded", addVideo);
