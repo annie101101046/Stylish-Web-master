@@ -8,7 +8,7 @@ let app = {
 	evts: {},
 	cart: {},
 	cst: {
-		API_HOST: "https://api.appworks-school.tw/api/1.0"
+		API_HOST: "https://davidadm.com/api/1.0"
 	}
 };
 // core operations
@@ -170,7 +170,7 @@ app.fb.login = function () {
 app.fb.loginStatusChange = function (response) {
 	if (response.status === "connected") {
 		app.state.auth = response.authResponse;
-		app.fb.updateLoginToServer();
+		//app.fb.updateLoginToServer();
 	} else {
 		app.state.auth = null;
 	}
@@ -189,7 +189,7 @@ app.fb.clickProfile = function () {
 	// if (app.state.auth === null) {
 	// 	app.fb.login();
 	// } else {
-	window.location = "./profile.html";
+	window.location = "profile.html";
 	// }
 };
 app.fb.getProfile = function () {

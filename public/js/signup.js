@@ -13,10 +13,12 @@ function signup() {
 	// Default options are marked with *
 	return fetch(url, {
 			headers: {
-				'Content-Type': 'application/json'
+				"Content-Type": "application/json",
 			},
 			body: JSON.stringify(data), // must match 'Content-Type' header
 			method: 'POST', // *GET, POST, PUT, DELETE, etc.
+			// mode: 'no-cors',
+
 		})
 		.then(response => {
 
@@ -51,20 +53,22 @@ function signup() {
 
 
 
-
 //一般會員登入
 function signin(data) {
 	const url = 'https://davidadm.com/api/1.0/user/signin';
-
 	// Default options are marked with *
+	console.log(data)
 	return fetch(url, {
 			headers: {
-				'Content-Type': 'application/json'
+				'user-agent': 'Mozilla/4.0 MDN Example',
+				'content-type': 'application/json'
 			},
 			body: JSON.stringify(data), // must match 'Content-Type' header
 			method: 'POST', // *GET, POST, PUT, DELETE, etc.
+			// mode: 'no-cors',
 		})
 		.then(response => {
+			console.log(response)
 			const {
 				status
 			} = response;
@@ -105,9 +109,9 @@ function getCookies(name) {
 
 function checkFacebookLogin() {
 	FB.getLoginStatus(function (response) {
+
+		console.log(response)
 		if (response.status === 'connected') {
-			console.log(response)
-			window.aaaaaa = response
 			signin({
 				"access_token": response.authResponse.accessToken,
 				"provider": "facebook"
@@ -121,17 +125,17 @@ function checkFacebookLogin() {
 (() => {
 
 	if (app.state.auth !== null) {
-		window.location = "./";
+		//window.location = "./";
 	}
 	app.fb.load();
 	app.fb.statusChangeCallback = function () {
 		if (app.state.auth !== null) {
-			window.location = "profile.html";
+			//window.location = "profile.html";
 		}
 	};
 
 	const sign1 = document.getElementById('sign1');
-	sign1.addEventListener("click", signin, );
+	sign1.addEventListener("click", signin);
 
 	const signUpButton = document.getElementById('signUpButton');
 	signUpButton.addEventListener("click", () => {
@@ -144,6 +148,6 @@ function checkFacebookLogin() {
 
 	const token = getCookies('token');
 	if (token) {
-		window.location = "profile.html";
+		//window.location = "profile.html";
 	}
 })();

@@ -36,6 +36,7 @@ function getLike() {
 
 //讀出該 id 的商品標題、圖片、價錢、點進去又回到該商品
 function showProducts(data) {
+	console.log(data)
 	for (let i = 0; i < data.data.id.length; i += 1) {
 		let id = data.data.id[i];
 		let url = `https://api.appworks-school.tw/api/1.0/products/details?id=${id}`;
