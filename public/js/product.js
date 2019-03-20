@@ -192,7 +192,7 @@ function showVideos(data) {
 		let frame = document.getElementById('product-videos');
 		let video = document.createElement('div');
 		frame.appendChild(video);
-		video.innerHTML = `<iframe width="560" height="315" src=${src} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+		video.innerHTML = `<iframe width="560" height="315" src=${src} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
 	}
 }
 
@@ -229,6 +229,22 @@ function Listlist() {
 		window.location = "favorite.html";
 	}
 }
+
+//拿 cookies
+function getCookies(name) {
+	let result = null;
+	cookies = document.cookie.split('; ');
+	cookies.forEach(element => {
+		if (element.indexOf(name) >= 0) {
+			result = element.split('=')[1];
+			//去拿 value
+		}
+	});
+
+	return result; // null if not found
+}
+
+
 
 //like button
 function likeButton() {
