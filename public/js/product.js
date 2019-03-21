@@ -188,8 +188,9 @@ function getVideos(id) {
 function showVideos(data) {
 	console.log(data);
 	for (let i = 0; i < data.data.length; i += 1) {
-		let youtubeLink = data.data[i].split('=');
-		let src = 'https://www.youtube.com/embed/' + youtubeLink[1];
+		let youtubeLink = data.data[i];
+		console.log(youtubeLink);
+		let src = 'https://www.youtube.com/embed/' + youtubeLink;
 		let frame = document.getElementById('product-videos');
 		let video = document.createElement('div');
 		frame.appendChild(video);

@@ -171,3 +171,39 @@ app.showProduct = function (product, container) {
 	}, container);
 };
 window.addEventListener("DOMContentLoaded", app.init);
+
+
+
+//聊天機器人ㄅ
+
+function myFunction() {
+	document.getElementById("chatButton").style.display = "none";
+}
+
+function chartbot() {
+	var button = document.getElementById("chatButton");
+	var chat = document.getElementById("chatroom");
+	button.onclick = function () {
+		myFunction();
+		var inputText = document.getElementById('ask').value;
+		var answer = document.getElementById('answer');
+
+		let data = {
+			"user_message": inputText
+		}
+
+		answer.onclick = function () {
+			const URL = 'https://davidadm.com/api/1.0/chat-bot';
+
+			fetch(URL, {
+				headers: {
+					'Authorization': 'Bearer iamacoolguyilovetaiwan',
+					'content-type': 'application/json'
+				},
+				method: 'POST', // *GET, POST, PUT, DELETE, etc.
+			}).then(res => res.json())
+		};
+	}
+}
+
+chartbot();
