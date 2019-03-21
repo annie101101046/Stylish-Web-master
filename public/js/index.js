@@ -176,34 +176,44 @@ window.addEventListener("DOMContentLoaded", app.init);
 
 //聊天機器人ㄅ
 
-function myFunction() {
-	document.getElementById("chatButton").style.display = "none";
+var button = document.getElementById("chatButton");
+var chat = document.getElementById("chatroom");
+
+button.onclick = function () {
+	myFunction();
+
 }
 
-function chartbot() {
-	var button = document.getElementById("chatButton");
-	var chat = document.getElementById("chatroom");
-	button.onclick = function () {
-		myFunction();
-		var inputText = document.getElementById('ask').value;
-		var answer = document.getElementById('answer');
+function myFunction() {
+	document.getElementById("chatButton").style.display = "none";
+	document.querySelector('.chatroom').style.display = "block";
+}
 
+
+function chatbot() {
+
+	var answer = document.getElementById('answer');
+
+	answer.onclick = function () {
+		let content = document.querySelector('.chat-content');
+		let inputText = document.getElementById('ask').value;
 		let data = {
 			"user_message": inputText
 		}
 
-		answer.onclick = function () {
-			const URL = 'https://davidadm.com/api/1.0/chat-bot';
+		const URL = 'https://davidadm.com/api/1.0/chat-bot';
 
-			fetch(URL, {
+		fetch(URL, {
 				headers: {
 					'Authorization': 'Bearer iamacoolguyilovetaiwan',
 					'content-type': 'application/json'
 				},
+				body: JSON.stringify(data),
 				method: 'POST', // *GET, POST, PUT, DELETE, etc.
-			}).then(res => res.json())
-		};
-	}
+			})
+			.then(res => res.text())
+			.then(textData => JSON.parse(textData))
+			.then(msg => content.textContent = msg.data);
+	};
 }
-
-chartbot();
+chatbot();
