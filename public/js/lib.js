@@ -73,6 +73,7 @@ app.setEventHandlers = function (obj, eventHandlers, useCapture) {
 	}
 	return obj;
 };
+
 app.ajax = function (method, src, args, headers, callback) {
 	let req = new XMLHttpRequest();
 	if (method.toLowerCase() === "post") { // post through json args
@@ -170,6 +171,7 @@ app.fb.login = function () {
 app.fb.loginStatusChange = function (response) {
 	if (response.status === "connected") {
 		app.state.auth = response.authResponse;
+		document.cookie = `token=${app.state.auth.accessToken}`
 		//app.fb.updateLoginToServer();
 	} else {
 		app.state.auth = null;
