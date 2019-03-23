@@ -1,5 +1,7 @@
-//儲存喜愛商品 -> 移除喜愛商品 -> 取得喜愛商品 
+//把舊的 cookie 給 backend
+//fb 的扣
 
+//儲存喜愛商品 -> 移除喜愛商品 -> 取得喜愛商品 
 function getCookies(name) {
 	let result = null;
 	cookies = document.cookie.split('; ');
@@ -90,3 +92,4 @@ function showProducts(data) {
 // data => console.log(data);
 
 window.addEventListener("DOMContentLoaded", getLike);
+window.addEventListener("DOMContentLoaded", app.init);

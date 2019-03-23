@@ -173,7 +173,6 @@ app.showProduct = function (product, container) {
 window.addEventListener("DOMContentLoaded", app.init);
 
 
-
 //聊天機器人ㄅ
 
 var button = document.getElementById("chatButton");
