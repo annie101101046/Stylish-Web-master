@@ -168,11 +168,26 @@ app.fb.login = function () {
 		scope: "public_profile,email"
 	});
 };
+
+app.fb.getcookie = function (name) {
+	let result = null;
+	cookies = document.cookie.split('; ');
+	cookies.forEach(element => {
+		if (element.indexOf(name) >= 0) {
+			result = element.split('=')[1];
+			//去拿 value
+		}
+	});
+	return result; // null if not found
+}
+
 app.fb.loginStatusChange = function (response) {
 	if (response.status === "connected") {
 		app.state.auth = response.authResponse;
-		document.cookie = `token=${app.state.auth.accessToken}`
-		//app.fb.updateLoginToServer();
+		if (app.fb.getcookie('token') === null) {
+			document.cookie = `token=${app.state.auth.accessToken}`
+			//app.fb.updateLoginToServer();
+		}
 	} else {
 		app.state.auth = null;
 	}
